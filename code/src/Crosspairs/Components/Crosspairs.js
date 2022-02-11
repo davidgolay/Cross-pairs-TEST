@@ -7,7 +7,7 @@ const Crosspairs = () => {
     return (
         <div
             className="Crosspairs">
-            <div className="sub-container">
+            <div className="titled-container">
                 <h1>Available cross pairs</h1>
                 {/* ------- AVAILABLE CROSS ------- */}
                 <div className="crosslist-container">

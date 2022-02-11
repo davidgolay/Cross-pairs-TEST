@@ -1,0 +1,25 @@
+.Crosspairs {
+    margin: 20px;
+}
+
+.titled-container {
+    box-sizing: border-box;
+    border-radius: 25px;
+    background-color: #DEDFF4;
+}
+
+.titled-container h1{
+    color: #DEDFF4;
+    font-size: 2rem;
+    background-color: #29295F;
+    padding: 10px;
+}
+
+
+.cross-container {
+    box-sizing: border-box;
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+    padding: 20px;
+}

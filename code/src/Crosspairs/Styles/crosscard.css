@@ -1,0 +1,29 @@
+.CrossCard {
+    background-image: linear-gradient(to bottom, #DEDFF4, #CFC5F4);
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+}
+
+.card-title {
+    /*background-image: linear-gradient(to left, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.9));*/
+    color: #29295F;
+    text-align: left;
+    padding: 5px 10px;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.rates-container {
+    padding: 5px 10px;
+}
+
+.rate-details {
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+.rate-details span{
+    font-weight: 500;
+    font-size: 1.5rem;
+}
