@@ -6,30 +6,36 @@ const Crosspairs = () => {
 
     const endPoint = 'https://api.ibanfirst.com/PublicAPI';
 
-    const [crossList, setCrossList] = useState([]);
+    const [crossList, setCrossList] = useState([[]]);
 
     /**
      * structure de donnée provisoire pour pouvoir générer les 'Cross Card' sans passer par l'API
      * cette structure représente fictivement/manuellement l'attribut 'crossList' retourné par le GET sur endpoint/Cross
      * @type {[{instrument: string, type: string},{instrument: string, type: string},{instrument: string, type: string}]}
      */
-    const manualCrossList = [
+    const manualCrossListPopulation = [
         { instrument: 'EURCHF', type: "Major" },
         { instrument: 'EURGBP', type: "Major" },
         { instrument: 'EURUSD', type: "Major" },
+        { instrument: 'USDCHF', type: "Major" },
+        { instrument: 'USDEUR', type: "Major" },
+        { instrument: 'USDGBP', type: "Major" },
     ];
 
     const getCrossList = async () => {
-        /**
-         * Le block suivant est le vrai bloc qu'il faudrait executer pour utiliser les données fournies par l'API
-         */
-        //const endPoint = 'https://api.ibanfirst.com/PublicAPI';
-        // const url = endPoint +'/Cross';
-        // const response = await fetch(url);
-        // const responseData = await response.json();
-        // console.log(responseData.crossList);
-        // setCrossList(responseData.crossList);
-        setCrossList(manualCrossList);
+
+        try {
+            const url = endPoint +'/Cross';
+            const response = await fetch(url);
+            const responseData = await response.json();
+            console.log('FETCHED CROSS LIST');
+            console.log(responseData.crossList);
+            setCrossList(responseData.crossList);
+        } catch(error) {
+            console.log(error);
+            console.log('ERROR WHILE FETCHING, USED MANUAL POPULATING')
+            setCrossList(manualCrossListPopulation);
+        }
     }
 
     useEffect(() => {
@@ -44,7 +50,7 @@ const Crosspairs = () => {
                 {/* ------- AVAILABLE CROSS ------- */}
                 <div className="crosslist-container">
                     { crossList.map((cross, index) => (
-                        <div className="cross-container" key={cross.instrument}>
+                        <div className="cross-container" key={cross.instrument} >
                             <CrossCard instrument={cross.instrument} />
                         </div>
                     ))}
