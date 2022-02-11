@@ -1,20 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import '../Styles/crosscard.css';
 
+/**
+ * Un composant correspondant à une paire de devises qui permet de détailler chacune des paires (current Rate, RateHistory...).
+ * Pour cela props.instrument qui est passé dans chaque item de crosscard lors de leur déclaration, permet de récupérer
+ * le nom de la paire de devise afin de générer les détails de cette paire en faisant une requete Rate/{instrument}
+ * @param props props.instrument permet de récupérer le nom de la paire de devise afin de générer les détails de cette paire
+ * en faisant une requete Rate/{instrument}
+ * @returns {JSX.Element}
+ */
 const CrossCard = (props) => {
-
 
     const endPoint = 'https://api.ibanfirst.com/PublicAPI';       //Utility string for fetching url
     const [crossName, setCrossName] = useState(props.instrument); //represents the name of the cross pair (instrument:)
-    const [rate, setRate] = useState(0);                 //represents the rate of the cross pair (rate:)
-    const [overOneMonth, setOverOneMonth] = useState(0);           //represents the rate evolution over one month
+    const [rate, setRate]           = useState(0);                 //represents the rate of the cross pair (rate:)
+    const [overOneMonth, setOverOneMonth]     = useState(0);           //represents the rate evolution over one month
     const [overThreeMonth, setOverThreeMonth] = useState(0);       //represents the rate evolution over three month
 
     /**
      * This method is called to update the cross details
      * @returns {Promise<void>}
      */
-    const getCross = async () => {
+    const loadCrossInfos = async () => {
         ////getting rates from API
         const currentRate = await getRate().catch((err) => {return "Unknown";});
         const oneMonthHistory = await getRateHistory(1).catch((err) => {return "Unknown";});
@@ -48,17 +55,18 @@ const CrossCard = (props) => {
      */
     const getRateHistory = async (month) => {
 
-        //Getting API content
+        ////Getting API content
         const urlRequest = rateHistoryURLRequest(month)
         const response   = await fetch(urlRequest);
         const data       = await response.json();
 
-        //Compute and update the overtime rate ratio
+        ////Compute and update the overtime rate ratio
         let indexWanted = data.rateHistory.length - 1;
         let newestRate = data.rateHistory[indexWanted].rate; // the rate of the cross pair at 'to' date
         let oldestRate = data.rateHistory[0].rate;           // the rate of the cross pair at 'from' date
         let overTimeRate = (newestRate * 100 / oldestRate);  // the ratio between now rate and starting date rate
 
+        ////Console display if needed
         const consoleDisplay = true;
         if(consoleDisplay){
             console.log(data);
@@ -67,7 +75,7 @@ const CrossCard = (props) => {
             console.log('ratio       : ' + overTimeRate);
         }
 
-        //apply precision and return
+        ////apply precision and return
         overTimeRate.toFixed(3);
         return overTimeRate;
     }
@@ -91,7 +99,7 @@ const CrossCard = (props) => {
 
 
     useEffect(() => {
-        getCross();
+        loadCrossInfos();
     }, [])
 
     return (

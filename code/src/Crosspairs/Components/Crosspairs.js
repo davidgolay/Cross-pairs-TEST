@@ -2,10 +2,14 @@ import React, {useEffect, useState} from 'react';
 import CrossCard from "./CrossCard";
 import '../Styles/crosspairs.css';
 
+/**
+ * Un composant se peuplant d’une liste de ‘Crosscard’ qui utilise la requet GET Cross de l’API
+ * @returns {JSX.Element}
+ */
 const Crosspairs = () => {
 
+    //// constantes utiles et d'état
     const endPoint = 'https://api.ibanfirst.com/PublicAPI';
-
     const [crossList, setCrossList] = useState([[]]);
 
     /**
