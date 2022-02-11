@@ -62,7 +62,7 @@ const CrossCard = (props) => {
 
         ////Compute and update the overtime rate ratio
         let indexWanted = data.rateHistory.length - 1;
-        let newestRate = data.rateHistory[indexWanted].rate; // the rate of the cross pair at 'to' date
+        let newestRate = data.rateHistory[indexWanted].rate; // the rate of the cross pair at 'now' date
         let oldestRate = data.rateHistory[0].rate;           // the rate of the cross pair at 'from' date
         let overTimeRate = (newestRate * 100 / oldestRate);  // the ratio between now rate and starting date rate
 
